@@ -1,0 +1,30 @@
+{
+    "baseUrl": "src",
+    "paths": {
+        "@src/*": [ "src/*" ]
+    },
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "lib",
+        "strict": true,
+        "removeComments": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "incremental": true,
+        "skipLibCheck": false,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
+        "strictBindCallApply": false,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+        "src",
+    ],
+    "exclude": [
+        "node_modules",
+    ]
+}
