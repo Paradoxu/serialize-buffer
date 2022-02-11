@@ -79,6 +79,7 @@ export class Octets {
 
 
     public pushBack(byte: number): Octets {
+        this.reserve(this.count + 1);
         this.buffer[this.count++] = byte;
         return this;
     }
