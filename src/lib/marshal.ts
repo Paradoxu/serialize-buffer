@@ -28,6 +28,7 @@ export abstract class Marshal implements Record<string, any> {
         for (const field of fields) {
             try {
                 if (field.isArray) {
+                    const length = field.length ?? this[field.name].length;
                     // Length isn't fixed so we should write it to the stream
                     if (field.length == null) {
                         const arrLength = this[field.name].length;
@@ -35,11 +36,11 @@ export abstract class Marshal implements Record<string, any> {
                     }
 
                     if (field.isMarshal) {
-                        for (let i = 0; i < field.length; i++) {
+                        for (let i = 0; i < length; i++) {
                             os.marshal(this[field.name][i]);
                         }
                     } else {
-                        for (let i = 0; i < field.length; i++)
+                        for (let i = 0; i < length; i++)
                             os[`marshal${field.type}`](this[field.name][i]);
                     }
                 } else if (field.isMarshal) {
