@@ -28,8 +28,8 @@ interface MarshalConfigInterface {
      * Represents the marshal operations for an enum
      */
     (configuration: {
-        type: Record<any, any>;
-        enum: Record<any, any>;
+        type: 'enum';
+        enum: () => Record<any, any>;
     }): ReturnAnnotation;
     /**
      * Represents the marshal operations for a String type, if a `length` is set, the marshal will
@@ -43,15 +43,16 @@ interface MarshalConfigInterface {
         encoding?: AllowedEncoding;
     }): ReturnAnnotation;
     /**
-     * Represents the marshal operations for a list of simple types such as an Array of strings,
-     * set `unsigned` to true to use unsigned types, if `compact` is set to true, the marshal will
+     * Represents the marshal operations for an Array of strings, if `compact` is set to true, the marshal will
      * get the length of the array from an (un)compacted int from the given stream, otherwise the length
-     * will be read/write from the stream as a normal int type, unless an explicity `length` is set
+     * will be read/write from the stream as a normal int type, unless an explicity `length` is defined, if the strings
+     * have a fixed value, set `strLength` to the length of the strings to be read/written
      */
     (configuration: {
         type: ['String'];
         compact?: boolean;
         length?: number;
+        strLength?: number;
         encoding?: AllowedEncoding;
     }): ReturnAnnotation;
     /**
@@ -85,8 +86,9 @@ export interface PropConfiguration {
     isUnsigned: boolean;
     isArray: boolean;
     length?: number;
+    strLength?: number;
     compact?: boolean;
-    enum?: Record<string, number>;
+    enum?: () => Record<string, number>;
     encoding?: AllowedEncoding;
     isTypeResolved?: boolean;
     resolveType?: () => void;

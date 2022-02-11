@@ -1,6 +1,6 @@
 {
   "name": "@leoletto/marshal-buffer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple TS metadata to help you serialize and deserialize objects to/from a buffer easily.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

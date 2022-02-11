@@ -30,6 +30,8 @@ export declare class OctetsStream extends Octets {
     unmarshalLong(): BigInt;
     marshalDouble(value: number): OctetsStream;
     unmarshalDouble(): number;
+    marshalUdouble(value: number): OctetsStream;
+    unmarshalUdouble(): number;
     marshalFloat(value: number): OctetsStream;
     unmarshalFloat(): number;
     marshalUfloat(value: number): OctetsStream;

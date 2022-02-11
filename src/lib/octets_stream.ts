@@ -161,6 +161,14 @@ export class OctetsStream extends Octets {
         return numberUtils.bigIntToDouble(this.unmarshalLong().valueOf());
     }
 
+    marshalUdouble(value: number): OctetsStream {
+        return this.marshalDouble(value >>> 0)
+    }
+
+    public unmarshalUdouble(): number {
+        return this.unmarshalDouble() >>> 0;
+    }
+
     public marshalFloat(value: number): OctetsStream {
         return this.marshalInt(numberUtils.floatToIntBits(value));
     }
