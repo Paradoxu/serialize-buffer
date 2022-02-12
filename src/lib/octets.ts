@@ -6,9 +6,7 @@ export class Octets {
     private count = 0;
 
     constructor();
-    constructor(param?: number | Buffer | Octets);
-    constructor(param: Octets, srcStart?: number, length?: number);
-    constructor(param: Buffer, srcStart?: number, length?: number);
+    constructor(param?: number | Buffer | Octets, srcStart?: number, length?: number);
     constructor(param?: any, srcStart?: number, length?: number) {
         if (param == null)
             this.reserve(Octets.DEFAULT_SIZE);
@@ -165,7 +163,7 @@ export class Octets {
         const arrayOfByte2 = paramOctets.buffer;
         for (let b = 0; (b < i); b++) {
             const j = (arrayOfByte1[b] - arrayOfByte2[b]);
-            if ((j != 0)) {
+            if ((j !== 0)) {
                 return j;
             }
 

@@ -59,25 +59,19 @@ interface MarshalConfigInterface {
      * Represents the marshal operations for a Buffer type, if a `length` is set
      */
     (configuration: {
-        type: () => {
-            new (): Marshal | Octets;
-        };
+        type: () => new () => Marshal | Octets;
     }): ReturnAnnotation;
     /**
      * Represents the marshal operations for a list of Buffer types,
      */
     (configuration: {
-        type: () => ({
-            new (): Marshal | Octets;
-        }[]);
+        type: () => Array<new () => Marshal | Octets>;
         compact?: boolean;
         length?: number;
     }): ReturnAnnotation;
 }
 export interface PropConfiguration {
-    constructor: {
-        new (): any;
-    };
+    constructor: new () => any;
     target: any;
     name: string;
     type: string;

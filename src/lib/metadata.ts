@@ -2,8 +2,8 @@ import { Octets } from "./octets";
 import { Marshal } from "./marshal";
 
 type NumberTypes = 'BigInt' | 'Long' | 'Int' | 'Short' | 'Byte' | 'Float' | 'Double';
-type MarshalType = () => ({ new(): Marshal } | [{ new(): Marshal }]);
-type OctetsType = () => ({ new(): Octets } | [{ new(): Octets }]);
+type MarshalType = () => (new() => Marshal | [new() => Marshal]);
+type OctetsType = () => (new() => Octets | [new() => Octets]);
 type AllowedTypes = NumberTypes | [NumberTypes] | MarshalType | OctetsType | 'String' | ['String'];
 
 type ReturnAnnotation = (target: any, name: string) => void;
@@ -49,12 +49,12 @@ interface MarshalConfigInterface {
     /**
      * Represents the marshal operations for a Buffer type, if a `length` is set
      */
-    (configuration: { type: () => { new(): Marshal | Octets } }): ReturnAnnotation;
+    (configuration: { type: () => new() => Marshal | Octets  }): ReturnAnnotation;
 
     /**
      * Represents the marshal operations for a list of Buffer types,
      */
-    (configuration: { type: () => ({ new(): Marshal | Octets }[]), compact?: boolean, length?: number }): ReturnAnnotation;
+    (configuration: { type: () => (new() => Marshal | Octets)[], compact?: boolean, length?: number }): ReturnAnnotation;
 }
 
 
@@ -70,7 +70,7 @@ interface MarshalConfiguration {
 }
 
 export interface PropConfiguration {
-    constructor: { new(): any };
+    constructor: new() => any;
     target: any;
     name: string;
     type: string;
@@ -103,7 +103,7 @@ function resolveType(type: any, target: any, name: string, configuration?: Parti
 
     properties.set(name, {
         ...configuration,
-        name: name,
+        name,
         type: `${typeName.charAt(0).toUpperCase()}${typeName.slice(1)}`,
         isMarshal,
         isOctets,
@@ -116,8 +116,8 @@ function resolveType(type: any, target: any, name: string, configuration?: Parti
     Reflect.defineMetadata('properties', properties, target);
 }
 
-export const marshal: MarshalConfigInterface = function marshal(configuration: Record<string, any>) {
-    return function (target: any, name: string) {
+export const marshal: MarshalConfigInterface = (configuration: Record<string, any>) => {
+    return (target: any, name: string) => {
         const properties: Map<string, PropConfiguration> =
             Reflect.getOwnMetadata('properties', target) || new Map<string, PropConfiguration>();
 
@@ -133,6 +133,5 @@ export const marshal: MarshalConfigInterface = function marshal(configuration: R
             const type = configuration?.type || Reflect.getMetadata("design:type", target, name);
             resolveType(type, target, name, configuration);
         }
-
     }
 }

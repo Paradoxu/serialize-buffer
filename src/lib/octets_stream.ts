@@ -15,7 +15,7 @@ export class OctetsStream extends Octets {
     }
 
     public static wrap(paramOctets: Octets): OctetsStream {
-        let octetsStream: OctetsStream = new OctetsStream();
+        const octetsStream = new OctetsStream();
         octetsStream.swap(paramOctets);
         return octetsStream;
     }
@@ -28,7 +28,7 @@ export class OctetsStream extends Octets {
     }
 
     public eos() {
-        return this.pos == this.size();
+        return this.pos === this.size();
     }
 
     public get position(): number {
@@ -187,8 +187,8 @@ export class OctetsStream extends Octets {
 
     public marshalString(value: string, encoding?: 'utf8' | 'utf16le'): OctetsStream {
         const buffer = Buffer.from(value, encoding ?? Octets.getCharset());
-        for (let i = 0; i < buffer.length; i++)
-            this.marshalByte(buffer[i]);
+        for (const byte of buffer)
+            this.marshalByte(byte);
         return this;
     }
 
@@ -265,7 +265,7 @@ export class OctetsStream extends Octets {
 
 
     public unmarshalString(length?: number, encoing?: 'utf8' | 'utf16le'): string {
-        let strLength = (length ?? this.unmarshalInt());
+        const strLength = (length ?? this.unmarshalInt());
         if (this.pos + strLength > this.size())
             throw new Error("MarshalException - End of stream");
 
@@ -297,7 +297,7 @@ export class OctetsStream extends Octets {
     }
 
     public uncompactSint32(): number {
-        if (this.pos == this.size()) {
+        if (this.pos === this.size()) {
             throw new Error("MarshalException");
         }
 
@@ -335,9 +335,9 @@ export class OctetsStream extends Octets {
         }
 
         if (octets == null) {
-            let octets: Octets = new Octets(this, this.pos, octLength);
+            const newOctets = new Octets(this, this.pos, octLength);
             this.pos = (this.pos + octLength);
-            return octets;
+            return newOctets;
         } else {
             octets.replace(this, this.pos, octLength);
             this.pos += octLength;

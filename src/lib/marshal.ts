@@ -14,8 +14,8 @@ export abstract class Marshal implements Record<string, any> {
     private getFields() {
         let target = Object.getPrototypeOf(this);
         let fields: PropConfiguration[] = [];
-        while (target != Object.prototype) {
-            let childFields: Map<string, PropConfiguration> = Reflect.getOwnMetadata('properties', target) || [];
+        while (target !== Object.prototype) {
+            const childFields: Map<string, PropConfiguration> = Reflect.getOwnMetadata('properties', target) || [];
             fields = [...childFields.values(), ...fields];
             target = Object.getPrototypeOf(target);
         }
@@ -125,8 +125,8 @@ export abstract class Marshal implements Record<string, any> {
                     for (let i = 0; i < length; i++){
                         if(field.type === 'String'){
                             const byteLength = field.encoding === 'utf16le' ? 2 : 1;
-                            const length = field.strLength ?? (os.unmarshalUint() * byteLength);
-                            this[field.name][i] = os.unmarshalString(length, field.encoding);
+                            const strLength = field.strLength ?? (os.unmarshalUint() * byteLength);
+                            this[field.name][i] = os.unmarshalString(strLength, field.encoding);
                         } else {
                             this[field.name][i] = os[`unmarshal${field.type}`]();
                         }
@@ -204,11 +204,11 @@ export abstract class Marshal implements Record<string, any> {
         for (const field of fields) {
             if (field.isArray) {
                 if (field.isMarshal) {
-                    for (let i = 0; i < this[field.name].length; i++) {
-                        sum += this[field.name][i].sizeOf;
+                    for (const f of  this[field.name]) {
+                        sum += f.sizeOf;
                     }
                 } else {
-                    for (let i = 0; i < this[field.name].length; i++)
+                    for (const f of this[field.name])
                         sum += this.getSizeOfBasicField(field);
                 }
             } else if (field.isMarshal) {

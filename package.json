@@ -1,6 +1,6 @@
 {
   "name": "@leoletto/marshal-buffer",
-  "version": "1.0.6",
+  "version": "1.0.1",
   "description": "A simple TS metadata to help you serialize and deserialize objects to/from a buffer easily.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/Paradoxu/serialize-buffer"
   },
   "keywords": [],
-  "author": "",
+  "author": "Leo Letto",
   "files": [
     "lib/**/*"
   ],

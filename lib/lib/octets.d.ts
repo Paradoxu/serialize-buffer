@@ -5,9 +5,7 @@ export declare class Octets {
     private buffer;
     private count;
     constructor();
-    constructor(param?: number | Buffer | Octets);
-    constructor(param: Octets, srcStart?: number, length?: number);
-    constructor(param: Buffer, srcStart?: number, length?: number);
+    constructor(param?: number | Buffer | Octets, srcStart?: number, length?: number);
     private roundup;
     reserve(paramInt: number): void;
     replace(source: Buffer | Octets, srcStart?: number, length?: number): Octets;
