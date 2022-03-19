@@ -25,6 +25,12 @@ interface MarshalConfigInterface {
         length?: number;
     }): ReturnAnnotation;
     /**
+     * Represents the marshal operations for boolean type
+     */
+    (configuration: {
+        type: 'Bool';
+    }): ReturnAnnotation;
+    /**
      * Represents the marshal operations for an enum
      */
     (configuration: {
@@ -65,7 +71,7 @@ interface MarshalConfigInterface {
      * Represents the marshal operations for a list of Buffer types,
      */
     (configuration: {
-        type: () => Array<new () => Marshal | Octets>;
+        type: () => (new () => Marshal | Octets)[];
         compact?: boolean;
         length?: number;
     }): ReturnAnnotation;

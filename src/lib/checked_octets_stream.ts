@@ -1,10 +1,10 @@
-import { OctetsStream } from "./octets_stream";
+import { OctetsStream } from './octets_stream';
 
 export class CheckOctetsStream extends OctetsStream {
-    checkPolicy = true;
-    checkedSize = 0;
+  checkPolicy = true;
+  checkedSize = 0;
 
-    constructor(data: number) {
-        super(data);
-    }
+  constructor(data: number) {
+    super(data);
+  }
 }

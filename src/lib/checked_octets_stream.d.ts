@@ -1,6 +1,6 @@
-import { OctetsStream } from "./octets_stream";
+import { OctetsStream } from './octets_stream';
 export declare class CheckOctetsStream extends OctetsStream {
-    checkPolicy: boolean;
-    checkedSize: number;
-    constructor(data: number);
+  checkPolicy: boolean;
+  checkedSize: number;
+  constructor(data: number);
 }
