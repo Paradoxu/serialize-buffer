@@ -1,5 +1,5 @@
-import { Octets } from "./octets";
-import { Marshal } from "./marshal";
+import { Octets } from './octets';
+import { Marshal } from './marshal';
 declare type NumberTypes = 'BigInt' | 'Long' | 'Int' | 'Short' | 'Byte' | 'Float' | 'Double';
 declare type ReturnAnnotation = (target: any, name: string) => void;
 declare type AllowedEncoding = 'utf8' | 'utf16le';

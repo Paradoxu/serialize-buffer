@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { Octets } from "./octets";
-import { Marshal } from "./marshal";
+import { Octets } from './octets';
+import { Marshal } from './marshal';
 export declare class OctetsStream extends Octets {
     private static MAXSPARE;
     isLittleEndian: boolean;
