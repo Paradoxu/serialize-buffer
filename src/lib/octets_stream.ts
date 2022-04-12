@@ -79,8 +79,8 @@ export class OctetsStream extends Octets {
       if(this.isLittleEndian)
         bytes = bytes.reverse();
 
-      for(let i = 0; i < bytes.length; i++)
-        this.marshalByte(bytes[i]);
+      for(const byte of bytes)
+        this.marshalByte(byte);
 
       return this;
   }
@@ -109,8 +109,8 @@ export class OctetsStream extends Octets {
     if(this.isLittleEndian)
       bytes = bytes.reverse();
 
-    for(let i = 0; i < bytes.length; i++)
-      this.marshalByte(bytes[i]);
+    for(const byte of bytes)
+      this.marshalByte(byte);
 
     return this;
   }
@@ -147,8 +147,8 @@ export class OctetsStream extends Octets {
     if(this.isLittleEndian)
       bytes = bytes.reverse();
 
-    for(let i = 0; i < bytes.length; i++)
-      this.marshalByte(bytes[i]);
+    for(const byte of bytes)
+      this.marshalByte(byte);
 
     return this;
   }
