@@ -1,5 +1,7 @@
 import { marshal, Marshal, OctetsStream } from '../index';
 
+// unit test
+
 class Person extends Marshal {
   @marshal({ type: 'String', encoding: 'utf8' })
   name: string;
@@ -10,6 +12,22 @@ class Person extends Marshal {
   @marshal({ type: 'Bool' })
   isMarried: boolean;
 }
+
+test('Test big endian', () => {
+  const octetsStream = new OctetsStream();
+  octetsStream.marshalInt(1);
+
+
+  expect(octetsStream.getBytes().toString()).toEqual('0,0,0,1');
+});
+
+test('Test little endian', () => {
+  const octetsStream = new OctetsStream();
+  octetsStream.isLittleEndian = true;
+  octetsStream.marshalInt(1);
+
+  expect(octetsStream.getBytes().toString()).toEqual('1,0,0,0');
+});
 
 test('Marshal Person', () => {
   const person = new Person();

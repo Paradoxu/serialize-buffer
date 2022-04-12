@@ -75,10 +75,14 @@ export class OctetsStream extends Octets {
   }
 
   marshalInt(value: number): OctetsStream {
-    return this.marshalByte((value >> 24) & 0xff)
-      .marshalByte((value >> 16) & 0xff)
-      .marshalByte((value >> 8) & 0xff)
-      .marshalByte(value & 0xff);
+      let bytes = [ (value >> 24) & 0xff, (value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
+      if(this.isLittleEndian)
+        bytes = bytes.reverse();
+
+      for(let i = 0; i < bytes.length; i++)
+        this.marshalByte(bytes[i]);
+
+      return this;
   }
 
   public unmarshalInt(): number {
@@ -101,7 +105,14 @@ export class OctetsStream extends Octets {
   }
 
   marshalShort(value: number): OctetsStream {
-    return this.marshalByte(value >> 8).marshalByte(value & 0xff);
+    let bytes = [ value >> 8, value & 0xff ];
+    if(this.isLittleEndian)
+      bytes = bytes.reverse();
+
+    for(let i = 0; i < bytes.length; i++)
+      this.marshalByte(bytes[i]);
+
+    return this;
   }
 
   public unmarshalShort(): number {
@@ -122,14 +133,24 @@ export class OctetsStream extends Octets {
   }
 
   marshalLong(value: BigInt): OctetsStream {
-    return this.marshalByte(Number((value.valueOf() >> BigInt(56)) & BigInt(0xff)))
-      .marshalByte(Number((value.valueOf() >> BigInt(48)) & BigInt(0xff)))
-      .marshalByte(Number((value.valueOf() >> BigInt(40)) & BigInt(0xff)))
-      .marshalByte(Number((value.valueOf() >> BigInt(32)) & BigInt(0xff)))
-      .marshalByte(Number((value.valueOf() >> BigInt(24)) & BigInt(0xff)))
-      .marshalByte(Number((value.valueOf() >> BigInt(16)) & BigInt(0xff)))
-      .marshalByte(Number((value.valueOf() >> BigInt(8)) & BigInt(0xff)))
-      .marshalByte(Number(value.valueOf() & BigInt(0xff)));
+    let bytes = [
+      Number((value.valueOf() >> BigInt(56)) & BigInt(0xff)),
+      Number((value.valueOf() >> BigInt(48)) & BigInt(0xff)),
+      Number((value.valueOf() >> BigInt(40)) & BigInt(0xff)),
+      Number((value.valueOf() >> BigInt(32)) & BigInt(0xff)),
+      Number((value.valueOf() >> BigInt(24)) & BigInt(0xff)),
+      Number((value.valueOf() >> BigInt(16)) & BigInt(0xff)),
+      Number((value.valueOf() >> BigInt(8)) & BigInt(0xff)),
+      Number(value.valueOf() & BigInt(0xff))
+    ];
+
+    if(this.isLittleEndian)
+      bytes = bytes.reverse();
+
+    for(let i = 0; i < bytes.length; i++)
+      this.marshalByte(bytes[i]);
+
+    return this;
   }
 
   public unmarshalLong(): BigInt {
