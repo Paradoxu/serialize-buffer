@@ -53,7 +53,7 @@ export abstract class Marshal implements Record<string, any> {
           // String is not fixed length, so we need to marshal the length into the stream
           if (field.length == null) {
             const byteLength = field.encoding === 'utf16le' ? 2 : 1;
-            const strLen = this[field.name].length * byteLength;
+            const strLen = Buffer.from(this[field.name]).length * byteLength;
             field.compact ? os.compactUint32(strLen) : os.marshalInt(strLen);
           }
           os.marshalString(this[field.name], field.encoding);
